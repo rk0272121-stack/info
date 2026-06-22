@@ -17,14 +17,14 @@ HEADERS = {
 PORT = int(os.environ.get('PORT', 10000))
 
 def get_comprehensive_vehicle_details(rc_number: str) -> dict:
-    """Enhanced scraper combining both approaches for maximum detail extraction."""
     rc = rc_number.strip().upper()
     url = f"https://vahanx.in/rc-search/{rc}"
     
     try:
         response = requests.get(url, headers=HEADERS, timeout=15)
         response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
+        # ✅ यहाँ बदलाव किया - html5lib use करो
+        soup = BeautifulSoup(response.text, "html5lib")
     except Exception as e:
         return {"error": f"Failed to fetch data: {str(e)}"}
 
